@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -38,6 +38,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+name = input('What is your name, Adventurer? ')
+player = Player(name, room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +51,39 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while True:
+    current_room = player.current_room
+    # * Prints the current room name
+    print(f"Welcome {player.name} Your current location --> {current_room.area}")
+    # * Prints the current description (the textwrap module might be useful here).
+    print(f"*** {current_room.description} ***")
+    # * Waits for user input and decides what to do.
+    move = input("Make a move (n s e w or q to quit)> ")
+    if move == "n":
+        if current_room.n_to is not None:
+            player.current_room = current_room.n_to
+        else:
+            print("YOU'VE REACHED THE END, NEW MOVE!")
+    elif move == "s":
+        if current_room.s_to is not None:
+            player.current_room = current_room.s_to
+        else:
+            print("YOU'VE REACHED THE END, NEW MOVE!")
+    elif move == "e":
+        if current_room.e_to is not None:
+            player.current_room = current_room.e_to
+        else:
+            print("YOU'VE REACHED THE END, NEW MOVE!")
+    elif move == "w":
+        if current_room.w_to is not None:
+            player.current_room = current_room.w_to
+        else:
+            print("YOU'VE REACHED THE END, NEW MOVE!")
+        # If the user enters "q", quit the game.
+    elif move == "q":
+        print("Thank you for playing! Farewell!")
+        exit()
+    else:
+        # Print an error message if the movement isn't allowed.
+        print("Not a valid move. Please enter: n, s, e, w or q")
+        # If the user enters a cardinal direction, attempt to move to the room there.
